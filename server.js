@@ -5,6 +5,7 @@ CONSTANT IMPORTS
 const express = require('express')
 const dotenv = require('dotenv')
 const connectDb = require('./src/config/databaseConnection')
+const projectRouter = require('./src/routes/projectRoutes')
 const app = express()
 
 
@@ -30,6 +31,11 @@ app.get("/",(req, res) => {
     res.send("Welcome to devalentine API 😎")
 })
 
+
+app.use("/api/images", "src/uploads")
+
+app.use("/api/projects", projectRouter);
+app.use("/api/users", userRouter);
 
 
 
