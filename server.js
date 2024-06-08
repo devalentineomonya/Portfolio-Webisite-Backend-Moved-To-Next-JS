@@ -6,15 +6,18 @@ const express = require('express')
 const dotenv = require('dotenv')
 const connectDb = require('./src/config/databaseConnection')
 const projectRouter = require('./src/routes/projectRoutes')
+const usersRouter = require('./src/routes/userRoutes')
+const bodyParser = require('body-parser')
+const cors = require('cors')
+dotenv.config()
 const app = express()
 
 
 /*========================
 UNIVERSAL MIDDLEWARE
 ========================== */
-app.use(express.json())
-app.use(express.urlencoded({extended:true}))
-
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended: true}))
 
 
 /*===========================
@@ -32,10 +35,9 @@ app.get("/",(req, res) => {
 })
 
 
-app.use("/api/images", "src/uploads")
-
+app.use("/api/images", express.static('src/uploads'))
 app.use("/api/projects", projectRouter);
-app.use("/api/users", userRouter);
+app.use("/api/users", usersRouter);
 
 
 

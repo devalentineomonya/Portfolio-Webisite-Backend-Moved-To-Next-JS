@@ -10,5 +10,5 @@ const project = {
     liveViews: { type: Number, default: 0 }
 }
 
-const projectsSchema = mongoose.schema(project)
+const projectsSchema = mongoose.Schema(project)
 module.exports = mongoose.models.projects || mongoose.model('projects', projectsSchema);
