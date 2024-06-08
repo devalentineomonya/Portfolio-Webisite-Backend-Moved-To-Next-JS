@@ -47,11 +47,11 @@ const start = () =>{
     try {
         connectDb()
         app.listen(port, ()=>{
-            console.log("Sever running on port " + port);
+            console.log("Server running on port " + port);
         })
 
     } catch (error) {
-        console.log("An error occured while starting node server", error.message);
+        console.log("An error occurred while starting node server", error.message);
     }
 }
 
