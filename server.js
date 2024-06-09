@@ -9,7 +9,7 @@ const projectRouter = require('./src/routes/projectRoutes')
 const usersRouter = require('./src/routes/userRoutes')
 const bodyParser = require('body-parser')
 const cors = require('cors')
-const authRouter = require('./src/routes/auuthRoutes')
+const authRouter = require('./src/routes/authRoutes')
 dotenv.config()
 const app = express()
 
