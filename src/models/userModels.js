@@ -9,6 +9,6 @@ const user = {
     password: { type: String, required: true }
 }
 
-const userSchema = mongoose.Schema(user)
+const userSchema = mongoose.Schema(user, {timestamps:true})
 
 module.exports = mongoose.models.users || mongoose.model("users", userSchema)
