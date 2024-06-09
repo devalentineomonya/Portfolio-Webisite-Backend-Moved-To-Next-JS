@@ -6,16 +6,16 @@ const storage = multer.diskStorage({
     destination: "src/uploads",
     filename: function (req, file, cb) {
         const uniquesuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-        cb(null, file.fieldname + file.originalname + "-" + uniquesuffix + ".jpeg");
+        cb(null, `${file.fieldname}-${file.originalname.replace(".", "").toLowerCase()}-${uniquesuffix}.jpeg`);
     },
 })
 
 
-const multerFilter = (req, file, cb) => {
+const multerFilter = (req,file, cb) => {
     if (file.mimetype.startsWith("image")) {
         cb(null, true);
     } else {
-        cb({ message: "Unsupported file format" }, false);
+        cb(["Unsupported file format"], false);
     }
 };
 

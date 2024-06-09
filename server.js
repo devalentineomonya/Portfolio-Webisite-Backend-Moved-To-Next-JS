@@ -9,6 +9,7 @@ const projectRouter = require('./src/routes/projectRoutes')
 const usersRouter = require('./src/routes/userRoutes')
 const bodyParser = require('body-parser')
 const cors = require('cors')
+const authRouter = require('./src/routes/auuthRoutes')
 dotenv.config()
 const app = express()
 
@@ -38,6 +39,7 @@ app.get("/",(req, res) => {
 app.use("/api/images", express.static('src/uploads'))
 app.use("/api/projects", projectRouter);
 app.use("/api/users", usersRouter);
+app.use("/api/auth",authRouter)
 
 
 

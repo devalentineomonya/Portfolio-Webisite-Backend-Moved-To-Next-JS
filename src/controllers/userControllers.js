@@ -1,12 +1,6 @@
 const userModels = require('../models/userModels')
 const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
-
-const userToken = (id) => {
-    const jwtSecrete = process.env.JWT_SECRET_STRING || 'jwtsuperstrongsecretstring'
-    return jwt.sign({ id }, jwtSecrete)
-}
-
+const { unlink } = require('../middlewares/uploadMiddleware')
 
 
 const addUser = async (req, res) => {
@@ -25,14 +19,13 @@ const addUser = async (req, res) => {
                 password: hashedPassword
             })
             await newUser.save()
-            const token = userToken(newUser._id)
-
-            return res.status(201).json({ success: true, message: "New user added successfully", token })
+            return res.status(201).json({ success: true, message: "New user added successfully" })
         }
-        
+        unlink(image)
         res.status(400).json({ success: false, message: "User with this email id already exists" })
 
     } catch (error) {
+        unlink(image)
         res.status(500).json({ success: false, message: "An error occurred while adding user =>" + error.message })
     }
 
