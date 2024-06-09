@@ -5,7 +5,7 @@ const { authMiddleware, isAdmin } = require('../middlewares/authMiddlewares');
 
 skillsRouter.get("/list", listSkills);
 skillsRouter.post("/add", authMiddleware, isAdmin, addSkill)
-skillsRouter.put("/update", authMiddleware, isAdmin, updateSkill)
-skillsRouter.delete("/delete", authMiddleware, isAdmin, deleteSkill)
+skillsRouter.put("/update/:id", authMiddleware, isAdmin, updateSkill)
+skillsRouter.delete("/delete/:id", authMiddleware, isAdmin, deleteSkill)
 
 module.exports = skillsRouter

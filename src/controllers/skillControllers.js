@@ -1,5 +1,4 @@
 const skillModels = require('../models/skillModels')
-const userModels = require('../models/userModels')
 
 
 const addSkill = async (req, res) => {
@@ -47,13 +46,14 @@ const updateSkill = async (req, res) => {
     const iconComponent = req.body.iconComponent
 
     try {
-        const skill = await userModels.findOne()
+        const skill = await skillModels.findOne()
+        console.log(skill)
         if (skill) {
-            const updatedSkill = await userModels.findByIdAndUpdate(id, {
-                name,
-                description,
-                iconsImport,
-                iconComponent
+            const updatedSkill = await skillModels.findByIdAndUpdate(id, {
+                name: name,
+                description: description,
+                iconsImport: iconsImport,
+                iconComponent: iconComponent
             }, {
                 new: true
             })
