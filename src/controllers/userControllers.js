@@ -4,7 +4,8 @@ const { unlink } = require('../middlewares/uploadMiddleware')
 
 
 const addUser = async (req, res) => {
-    const name = req.body.name
+    const firstName = req.body.firstName
+    const lastName = req.body.lastName
     const email = req.body.email
     const image = req.file.filename
     const password = req.body.password
@@ -13,7 +14,8 @@ const addUser = async (req, res) => {
         const checkUser = await userModels.findOne({ email })
         if (!checkUser) {
             const newUser = new userModels({
-                name: name,
+                firstName: firstName,
+                lastName: lastName,
                 email: email,
                 image: image,
                 password: hashedPassword
@@ -61,8 +63,16 @@ const updateUser = async (req, res) => {
     try {
         const user = await userModels.findById(id)
         if (user) {
-            await userModels.findByIdAndUpdate(id, req.body)
-            return res.status(200).json({ success: true, message: 'User updated successfully' })
+            const updateUser = await userModels.findByIdAndUpdate(id, {
+                firstName: req.body.firstName,
+                lastName: req.body.lastName,
+                email: req.body.email
+            },
+                {
+                    new: true
+                })
+
+            return res.status(200).json({ success: true, message: 'User updated successfully', data: updateUser })
         }
         res.status(404).json({ success: false, message: 'User with specified if does not exist ' })
 
