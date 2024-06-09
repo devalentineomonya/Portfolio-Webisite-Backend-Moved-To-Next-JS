@@ -11,6 +11,7 @@ const authMiddleware = async (req, res, next) => {
             const user = await userModels.findOne({ _id: decodedToken.id })
             if(user){
                 req.user = user
+                req.currentUserId = decodedToken.id
                 next()
                 return
             }
@@ -27,7 +28,6 @@ const authMiddleware = async (req, res, next) => {
 const isAdmin = (req, res, next) => {
     try {
         const user = req.user
-        console.log(user)
         const isAdmin = user.isAdmin
         if (isAdmin) {
             next()

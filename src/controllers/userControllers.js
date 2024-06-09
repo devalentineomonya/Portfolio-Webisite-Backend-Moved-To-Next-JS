@@ -36,13 +36,18 @@ const addUser = async (req, res) => {
 
 const deleteUser = async (req, res) => {
     const { id } = req.params
+    const currentUserId = req.currentUserId
     try {
-        const user = await userModels.findById(id)
-        if (user) {
-            await userModels.findByIdAndDelete(id)
-           return res.status(200).json({ success: true, message: "User has been deleted successfully" })
+        if (id !== currentUserId) {
+            const user = await userModels.findById(id)
+            if (user) {
+                unlink(user.image)
+                await userModels.findByIdAndDelete(id)
+                return res.status(200).json({ success: true, message: "User has been deleted successfully" })
+            }
+            return res.status(404).json({ success: false, message: "User with the specified id was not found" })
         }
-        res.status(404).json({success: false, message: "User with the specified id was not found"})
+        res.status(400).json({ success: false, message: "Current user cant be deleted" })
     } catch (error) {
         res.status(500).json({ success: false, message: "An error occurred while fetching users " + error.message })
     }

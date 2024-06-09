@@ -1,12 +1,8 @@
 const userModels = require("../models/userModels")
 const bcrypt = require("bcrypt")
-const jwt = require("jsonwebtoken")
+const userToken = require("../config/userToken")
 
 
-const userToken = (id) => {
-    const jwtSecrete = process.env.JWT_SECRET_STRING || 'jwtsuperstrongsecretstring'
-    return jwt.sign({ id }, jwtSecrete)
-}
 
 
 
