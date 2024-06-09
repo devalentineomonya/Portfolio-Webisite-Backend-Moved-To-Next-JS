@@ -7,9 +7,9 @@ const usersRouter = express.Router()
 
 
 usersRouter.get("/list", authMiddleware, listUsers)
-usersRouter.get("/get", authMiddleware, getUser)
+usersRouter.get("/get/:id", authMiddleware, getUser)
 usersRouter.post("/add", authMiddleware, isAdmin, upload.upload.single("image"), addUser)
-usersRouter.put("/update", authMiddleware, isAdmin, updateUser)
-usersRouter.delete("/delete", authMiddleware, isAdmin, deleteUser)
+usersRouter.put("/update/:id", authMiddleware, isAdmin, updateUser)
+usersRouter.delete("/delete/:id", authMiddleware, isAdmin, deleteUser)
 
 module.exports = usersRouter
