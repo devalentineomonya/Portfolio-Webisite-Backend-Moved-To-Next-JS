@@ -1,3 +1,4 @@
+const { unlink } = require('../middlewares/uploadMiddleware');
 const projectModel = require('../models/projectModels');
 
 
@@ -6,25 +7,47 @@ const addProject = async (req, res) => {
     const name = req.body.name
     const description = req.body.description
     const technologies = req.body.technologies
+    const image = req.file.filename
     const githubLink = req.body.githubLink
     const liveLink = req.body.liveLink
 
+
+
+
     try {
-        const newProject = new projectModel.Project({
-            name: name,
-            description: description,
-            technologies: technologies,
-            githubLink: githubLink,
-            liveLink: liveLink
+
+        const checkProject = await projectModel.findOne({
+            $or: [
+                { name },
+                { githubLink },
+                { liveLink }
+
+            ]
         })
-        await newProject.save()
-        res.status(201).json({ success: true, message: "Project Added Successfully" })
+
+        if (!checkProject) {
+            const newProject = new projectModel({
+                name,
+                description,
+                image,
+                technologies,
+                githubLink,
+                liveLink
+            })
+            await newProject.save()
+            return res.status(201).json({ success: true, message: "Project Added Successfully" })
+        }
+
+        unlink(image)
+        res.status(400).json({ success: false, message: "Project With this name, github link or live link already exists" })
 
     } catch (error) {
+        unlink(image)
         res.status(500).json({ success: false, message: "An error occured while saving project\n " + error.message })
     }
 
 }
+
 
 const listProjects = async (req, res) => {
     try {
@@ -39,6 +62,7 @@ const listProjects = async (req, res) => {
 const updateProject = (req, res) => {
 
 }
+
 
 const deleteProject = (req, res) => {
 

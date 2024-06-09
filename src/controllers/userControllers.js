@@ -14,10 +14,10 @@ const addUser = async (req, res) => {
         const checkUser = await userModels.findOne({ email })
         if (!checkUser) {
             const newUser = new userModels({
-                firstName: firstName,
-                lastName: lastName,
-                email: email,
-                image: image,
+                firstName,
+                lastName,
+                email,
+                image,
                 password: hashedPassword
             })
             await newUser.save()

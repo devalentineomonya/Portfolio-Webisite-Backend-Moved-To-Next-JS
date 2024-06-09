@@ -1,13 +1,15 @@
 const express = require('express');
 const { listProjects, addProject, deleteProject, updateProject } = require('../controllers/projectControllers');
 const projectRouter = express.Router();
+const { authMiddleware, isAdmin } = require('../middlewares/authMiddlewares');
+const { upload } = require('../middlewares/uploadMiddleware');
 
 projectRouter.get("list", listProjects)
 
-projectRouter.post("/add", addProject)
+projectRouter.post("/add", authMiddleware, isAdmin,upload.single("image"), addProject)
 
-projectRouter.put("/update", updateProject)
+projectRouter.put("/update", authMiddleware, isAdmin, updateProject)
 
-projectRouter.delete("/delete", deleteProject)
+projectRouter.delete("/delete", authMiddleware, isAdmin, deleteProject)
 
 module.exports = projectRouter
