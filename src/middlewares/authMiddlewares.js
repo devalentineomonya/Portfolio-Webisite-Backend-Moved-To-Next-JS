@@ -12,8 +12,8 @@ const authMiddleware = async (req, res, next) => {
             if(user){
                 req.user = user
                 req.currentUserId = decodedToken.id
-                next()
-                return
+                return next()
+               
             }
         }
         res.status(401).json({ success: false, message: "User token is expired or invalid, be sure to provide the correct token  or log in again" })
@@ -30,8 +30,8 @@ const isAdmin = (req, res, next) => {
         const user = req.user
         const isAdmin = user.isAdmin
         if (isAdmin) {
-            next()
-            return
+            return next()
+            
         }
         res.status(401).json({ success: false, message: "You don't have the admin privileges to perform this action" })
     } catch (error) {
