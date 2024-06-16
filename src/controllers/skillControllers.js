@@ -2,10 +2,7 @@ const skillModels = require('../models/skillModels')
 
 
 const addSkill = async (req, res) => {
-    const name = req.body.name
-    const description = req.body.description
-    const iconsImport = req.body.iconsImport
-    const iconComponent = req.body.iconComponent
+    const { name, description, iconsImport, iconComponent } = req.body
 
     try {
         const newSkill = new skillModels({
@@ -40,10 +37,7 @@ const listSkills = async (req, res) => {
 
 const updateSkill = async (req, res) => {
     const { id } = req.params
-    const name = req.body.name
-    const description = req.body.description
-    const iconsImport = req.body.iconsImport
-    const iconComponent = req.body.iconComponent
+    const { name, description, iconsImport, iconComponent } = req.body
 
     try {
         const skill = await skillModels.findOne()
