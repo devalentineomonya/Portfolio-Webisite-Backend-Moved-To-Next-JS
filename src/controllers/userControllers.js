@@ -4,11 +4,9 @@ const { unlink } = require('../middlewares/uploadMiddleware')
 
 
 const addUser = async (req, res) => {
-    const firstName = req.body.firstName
-    const lastName = req.body.lastName
-    const email = req.body.email
+    const { firstName, lastName, email, password } = req.body.firstName
     const image = req.file.filename
-    const password = req.body.password
+
     try {
         const hashedPassword = await bcrypt.hash(password, 15)
         const checkUser = await userModels.findOne({ email })
