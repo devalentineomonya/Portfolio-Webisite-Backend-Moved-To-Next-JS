@@ -12,6 +12,7 @@ const cors = require('cors')
 const authRouter = require('./src/routes/authRoutes')
 const skillsRouter = require('./src/routes/skillRoutes')
 const languagesRouter = require('./src/routes/languageRoutes')
+const partnersRouter = require('./src/routes/partnerRoutes')
 dotenv.config()
 const app = express()
 
@@ -45,6 +46,7 @@ app.use("/api/users", usersRouter);
 app.use("/api/auth",authRouter)
 app.use("/api/skills", skillsRouter);
 app.use("/api/languages", languagesRouter);
+app.use("/api/partners", partnersRouter);
 
 
 
