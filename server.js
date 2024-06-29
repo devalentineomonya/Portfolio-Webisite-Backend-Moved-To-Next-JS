@@ -18,7 +18,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
-app.get("/", (req, res) => res.send("Welcome to devalentine API 😎"));
+app.get("/", (req, res) => res.send("<h1>Welcome to devalentine API 😎</h1>"));
 
 app.use("/api/images", express.static('src/uploads'));
 app.use("/api/projects", projectRouter);
