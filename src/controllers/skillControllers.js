@@ -1,9 +1,13 @@
 const skillModels = require('../models/skillModels');
+const { skillSchema } = require('../validation/JoiSchemas');
 
 const addSkill = async (req, res) => {
     const { name, description, iconsImport, iconComponent } = req.body;
 
     try {
+
+        await skillSchema.validateAsync({ name, description, iconsImport, iconComponent });
+
         const newSkill = new skillModels({
             name,
             description,
@@ -13,6 +17,10 @@ const addSkill = async (req, res) => {
         await newSkill.save();
         res.status(201).json({ success: true, message: "Skill added successfully" });
     } catch (error) {
+        if (error.isJoi) {
+            // Joi validation error
+            return res.status(400).json({ success: false, message: error.details[0].message });
+        }
         res.status(500).json({ success: false, message: "An error occurred while adding skill: " + error.message });
     }
 };

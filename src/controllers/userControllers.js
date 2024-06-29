@@ -1,12 +1,16 @@
 const userModels = require('../models/userModels');
 const bcrypt = require('bcrypt');
 const { unlink } = require('../middlewares/uploadMiddleware');
+const { userSchema } = require('../validation/JoiSchemas');
 
 const addUser = async (req, res) => {
     const { firstName, lastName, email, password } = req.body;
     const image = req.file ? req.file.filename : null;
 
     try {
+        // Validate the request data against the userSchema
+        await userSchema.validateAsync({ firstName, lastName, email, password });
+
         const hashedPassword = await bcrypt.hash(password, 15);
         const checkUser = await userModels.findOne({ email });
 
@@ -31,6 +35,10 @@ const addUser = async (req, res) => {
     } catch (error) {
         if (image) {
             unlink(image);
+        }
+        if (error.isJoi) {
+            // Joi validation error
+            return res.status(400).json({ success: false, message: error.details[0].message });
         }
         res.status(500).json({ success: false, message: "An error occurred while adding user: " + error.message });
     }

@@ -1,18 +1,23 @@
 const testimonialModel = require('../models/testimonial'); // Assuming your model file path is correct
+const { testimonialSchema } = require('../validation/JoiSchemas');
 
 // Create a new testimonial
 const addTestimonial = async (req, res) => {
     const { name, occupation, message } = req.body;
 
     try {
+        await testimonialSchema.validateAsync({ name, occupation, message });
+
         const newTestimonial = new testimonialModel({ name, occupation, message });
         await newTestimonial.save();
         res.status(201).json({ success: true, message: 'Testimonial added successfully', data: newTestimonial });
     } catch (error) {
+        if (error.isJoi) {
+                return res.status(400).json({ success: false, message: error.details[0].message });
+        }
         res.status(500).json({ success: false, message: 'Failed to add testimonial', error: error.message });
     }
-};
-
+}
 // Get all testimonials
 const getTestimonials = async (req, res) => {
     try {

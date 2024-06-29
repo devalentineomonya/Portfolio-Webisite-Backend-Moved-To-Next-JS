@@ -1,21 +1,21 @@
 const languageModel = require('../models/languageModels');
-
+const {projectSchema} = require('../validation/JoiSchemas')
 const addLanguage = async (req, res) => {
     try {
         const { name, percentage } = req.body;
-        
-        // Check if language already exists
+        const validatedData = await projectSchema.validateAsync({ name, percentage });
         const checkLanguage = await languageModel.findOne({ name });
         if (checkLanguage) {
             return res.status(400).json({ success: false, message: "This language already exists in your database" });
         }
-
-        // Create new language document
-        const language = new languageModel({ name, percentage });
+        const language = new languageModel(validatedData);
         await language.save();
 
         res.status(201).json({ success: true, message: "Language added successfully", data: language });
     } catch (error) {
+        if (Joi.isError(error)) {
+            return res.status(400).json({ success: false, message: error.details[0].message });
+        }
         res.status(500).json({ success: false, message: "An error occurred while adding language" });
     }
 };

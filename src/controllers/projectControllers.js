@@ -1,5 +1,6 @@
 const { unlink } = require('../middlewares/uploadMiddleware');
 const projectModel = require('../models/projectModels');
+const { projectSchema } = require('../validation/JoiSchemas');
 
 const checkProjectDuplicate = async (name, githubLink, liveLink) => {
     return await projectModel.findOne({
@@ -16,6 +17,9 @@ const addProject = async (req, res) => {
     const image = req.file.filename;
 
     try {
+
+        await projectSchema.validateAsync({ name, description, technologies, githubLink, liveLink, image });
+
         const checkProject = await checkProjectDuplicate(name, githubLink, liveLink);
 
         if (!checkProject) {
@@ -34,6 +38,10 @@ const addProject = async (req, res) => {
         unlink(image);
         res.status(400).json({ success: false, message: "Project with this name, GitHub link, or live link already exists" });
     } catch (error) {
+        if (error.isJoi) {
+            unlink(image);
+            return res.status(400).json({ success: false, message: error.details[0].message });
+        }
         unlink(image);
         res.status(500).json({ success: false, message: "An error occurred while saving project: " + error.message });
     }

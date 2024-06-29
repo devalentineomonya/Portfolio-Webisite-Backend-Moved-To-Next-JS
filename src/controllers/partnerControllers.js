@@ -1,11 +1,14 @@
 const { unlink } = require("../middlewares/uploadMiddleware");
 const partnersModel = require("../models/partnerModels");
+const {partnerSchema} = require("../validation/JoiSchemas")
 
 const addPartner = async (req, res) => {
     const { name } = req.body;
     const image = req.file.filename;
 
     try {
+        await partnerSchema.validateAsync({ name, image });
+
         const exists = await partnersModel.findOne({ name });
         if (exists) {
             unlink(image);
@@ -16,10 +19,15 @@ const addPartner = async (req, res) => {
         await newPartner.save();
         res.status(201).json({ success: true, message: "New partner has been added successfully" });
     } catch (error) {
+        if (Joi.isError(error)) {
+            unlink(image);
+            return res.status(400).json({ success: false, message: error.details[0].message });
+        }
         unlink(image);
         res.status(500).json({ success: false, message: "An error occurred while saving partner: " + error.message });
     }
-};
+}
+
 
 const getPartners = async (req, res) => {
     try {
