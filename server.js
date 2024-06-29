@@ -28,6 +28,10 @@ app.use("/api/skills", skillsRouter);
 app.use("/api/languages", languagesRouter);
 app.use("/api/partners", partnersRouter);
 
+app.use("/*",(req,res) => {
+    res.send("<h1>OOPS Seems you visited a route unknown to us 🙄</h1>")
+})
+
 const startServer = async () => {
     try {
         await connectDb();
