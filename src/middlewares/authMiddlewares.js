@@ -5,7 +5,7 @@ const authMiddleware = async (req, res, next) => {
     const bearerToken = req.headers.authorization || "";
     
     try {
-        if (bearerToken && bearerToken.startsWith("Bearer ")) {
+        if (bearerToken?.startsWith("Bearer ")) {
             const token = bearerToken.split(" ")[1];
             const jwtSecret = process.env.JWT_SECRET_STRING || 'jwtsuperstrongsecretstring';
             const decodedToken = jwt.verify(token, jwtSecret);

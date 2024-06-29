@@ -27,7 +27,7 @@ const updateLanguage = async (req, res) => {
         
         // Check if language with the same name already exists
         const checkLanguage = await languageModel.findOne({ name });
-        if (checkLanguage && checkLanguage._id.toString() !== id) {
+        if (checkLanguage?._id.toString() !== id) {
             return res.status(400).json({ success: false, message: "Language with this name already exists" });
         }
 
