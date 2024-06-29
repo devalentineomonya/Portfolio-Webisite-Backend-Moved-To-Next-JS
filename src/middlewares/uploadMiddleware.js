@@ -1,34 +1,40 @@
-const multer = require('multer')
-const fs = require('fs')
-
+const multer = require('multer');
+const fs = require('fs');
+const path = require('path');
 
 const storage = multer.diskStorage({
-    destination: "src/uploads",
-    filename: function (req, file, cb) {
-        const uniquesuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-        cb(null, `${file.fieldname}-${file.originalname.split(".")[0].toLowerCase()}-${uniquesuffix}.jpeg`);
+    destination: function (req, file, cb) {
+        cb(null, 'src/uploads');
     },
-})
+    filename: function (req, file, cb) {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
+        const originalName = file.originalname.toLowerCase().split('.')[0];
+        const extension = path.extname(file.originalname).toLowerCase();
+        cb(null, `${file.fieldname}-${originalName}-${uniqueSuffix}${extension}`);
+    }
+});
 
-
-const multerFilter = (req,file, cb) => {
-    if (file.mimetype.startsWith("image")) {
+const multerFilter = (req, file, cb) => {
+    if (file.mimetype.startsWith('image')) {
         cb(null, true);
     } else {
-        cb(["Unsupported file format"], false);
+        cb(new Error('Unsupported file format'), false);
     }
 };
 
 const upload = multer({
     storage: storage,
     fileFilter: multerFilter,
-    limits: { fileSize: 1000000 },
+    limits: { fileSize: 5000000 } // 1MB file size limit
 });
 
-
 const unlink = (image) => {
-    fs.unlink(`src/uploads/${image}`, () => { })
-}
+    const imagePath = path.join(__dirname, '../src/uploads', image);
+    fs.unlink(imagePath, (err) => {
+        if (err) {
+            console.error(`Error deleting file ${image}: ${err}`);
+        }
+    });
+};
 
-
-module.exports = { upload, unlink }
+module.exports = { upload, unlink };

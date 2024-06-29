@@ -1,15 +1,14 @@
-const express = require('express')
-const { addUser, deleteUser, updateUser, getUser, listUsers } = require("../controllers/userControllers")
-const upload = require("../middlewares/uploadMiddleware")
-const { authMiddleware, isAdmin } = require('../middlewares/authMiddlewares')
-const usersRouter = express.Router()
+const express = require('express');
+const usersRouter = express.Router();
+const { addUser, deleteUser, updateUser, getUser, listUsers } = require("../controllers/userControllers");
+const { authMiddleware, isAdmin } = require('../middlewares/authMiddlewares');
+const upload = require("../middlewares/uploadMiddleware");
 
+usersRouter
+    .get("/list", authMiddleware, listUsers)
+    .get("/get/:id", authMiddleware, getUser)
+    .post("/add", authMiddleware, isAdmin, upload.upload.single("image"), addUser)
+    .put("/update/:id", authMiddleware, isAdmin, updateUser)
+    .delete("/delete/:id", authMiddleware, isAdmin, deleteUser);
 
-
-usersRouter.get("/list", authMiddleware, listUsers)
-usersRouter.get("/get/:id", authMiddleware, getUser)
-usersRouter.post("/add", authMiddleware, isAdmin, upload.upload.single("image"), addUser)
-usersRouter.put("/update/:id", authMiddleware, isAdmin, updateUser)
-usersRouter.delete("/delete/:id", authMiddleware, isAdmin, deleteUser)
-
-module.exports = usersRouter
+module.exports = usersRouter;
