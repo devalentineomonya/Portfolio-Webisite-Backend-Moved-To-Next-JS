@@ -3,10 +3,10 @@ const { addLanguage, getLanguages, updateLanguage, deleteLanguage } = require('.
 
 const languagesRouter = express.Router();
 
-languagesRouter.route('/')
-    .post(addLanguage)
-    .get(getLanguages)
-    .put(updateLanguage)
-    .delete(deleteLanguage);
+languagesRouter
+    .post("/add",addLanguage)
+    .get("/list",getLanguages)
+    .put("/update",updateLanguage)
+    .delete("/delete",deleteLanguage);
 
 module.exports = languagesRouter;

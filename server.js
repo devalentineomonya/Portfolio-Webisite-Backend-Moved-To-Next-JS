@@ -14,6 +14,10 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 3000;
 
+/*
+mongodb+srv://martininjah:zYQmeJyLVBHo68s4@devalentineportfolio.xehjtbh.mongodb.net/devalentinePortfolio?retryWrites=true&w=majority&appName=devalentinePortfolio
+*/
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
@@ -28,9 +32,7 @@ app.use("/api/skills", skillsRouter);
 app.use("/api/languages", languagesRouter);
 app.use("/api/partners", partnersRouter);
 
-app.use("/*",(req,res) => {
-    res.send("<h1>OOPS Seems you visited a route unknown to us 🙄</h1>")
-})
+app.use("/*", (req, res) => res.send("<h2>OOPS Seems you visited a route unknown to us 🙄</h2>"))
 
 const startServer = async () => {
     try {
