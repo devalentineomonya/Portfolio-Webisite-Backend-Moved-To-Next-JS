@@ -32,7 +32,7 @@ const addPartner = async (req, res) => {
 const getPartners = async (req, res) => {
     try {
         const partners = await partnersModel.find();
-        res.status(200).json({ success: true, length: partners.length, data: partners });
+        res.status(200).json({ success: true, count: partners.length, data: partners });
     } catch (error) {
         res.status(500).json({ success: false, message: "An error occurred while fetching partners: " + error.message });
     }

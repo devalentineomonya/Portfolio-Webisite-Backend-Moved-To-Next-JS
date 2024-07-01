@@ -5,6 +5,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Devalentine API | Documentation</title>
+        <link rel="shortcut icon" href="/icons/logo.png" type="image/x-icon">
         <link rel="stylesheet" href="/css/styles.css">
     </head>
 
@@ -40,13 +41,20 @@
                 </section>
                 <section class="endpoints">
                     <h2>API Endpoints</h2>
+                    <p>Note: ONLY GET ENDPOINTS ARE AVILABLE TO PUBLIC OTHER REQUIRE USER TO BE LOGGED IN AS ADMIN</p>
                     <h6>Projects</h6>
-                    <p>API endpoint to get all the projects</p>
+                    <p>API endpoint for projects CRUD operations.</p>
                     <pre><code>GET https://devalentineapi.onrender.app/api/projects/list</code></pre>
+                    <pre><code>POST https://devalentineapi.onrender.app/api/projects/add</code></pre>
+                    <pre><code>PUT https://devalentineapi.onrender.app/api/projects/update/{projectId}</code></pre>
+                    <pre><code>DELETE https://devalentineapi.onrender.app/api/projects/delete/{projectId}</code></pre>
 
                     <h6>Skills</h6>
                     <p>API endpoint to get all the Skills</p>
                     <pre><code>GET https://devalentineapi.onrender.app/api/skills/list</code></pre>
+                    <pre><code>POST https://devalentineapi.onrender.app/api/skills/add</code></pre>
+                    <pre><code>PUT https://devalentineapi.onrender.app/api/skills/update/{skillId}</code></pre>
+                    <pre><code>DELETE https://devalentineapi.onrender.app/api/skills/delete/{skillId}</code></pre>
 
                     <h6>Images</h6>
                     <p>API endpoint to get all images</p>
@@ -55,14 +63,23 @@
                     <h6>Languages</h6>
                     <p>API endpoint to get all the languages</p>
                     <pre><code>GET https://devalentineapi.onrender.app/api/languages/list</code></pre>
+                    <pre><code>POST https://devalentineapi.onrender.app/api/languages/add</code></pre>
+                    <pre><code>PUT https://devalentineapi.onrender.app/api/languages/update/{languagesId}</code></pre>
+                    <pre><code>DELETE https://devalentineapi.onrender.app/api/languages/{languagesId}</code></pre>
 
                     <h6>Partners</h6>
                     <p>API endpoint to get all the partners</p>
                     <pre><code>GET https://devalentineapi.onrender.app/api/partners/list</code></pre>
+                    <pre><code>POST https://devalentineapi.onrender.app/api/partners/add</code></pre>
+                    <pre><code>PUT https://devalentineapi.onrender.app/api/partners/update/{partnerId}</code></pre>
+                    <pre><code>DELETE https://devalentineapi.onrender.app/api/partners/delete/{partnerId}</code></pre>
 
                     <h6>Testimonials</h6>
                     <p>API endpoint to get all the testimonials</p>
                     <pre><code>GET https://devalentineapi.onrender.app/api/testimonials/list</code></pre>
+                    <pre><code>POST https://devalentineapi.onrender.app/api/testimonials/add</code></pre>
+                    <pre><code>PUT https://devalentineapi.onrender.app/api/testimonials/update/{testimonialsId}</code></pre>
+                    <pre><code>DELETE https://devalentineapi.onrender.app/api/testimonials/delete/{testimonialsId}</code></pre>
                 </section>
             </div>
         </main>
@@ -74,7 +91,6 @@
         <script>
             const year = document.getElementById("year")
             const currentYear = new Date().getFullYear()
-            console.log(currentYear)
             year.innerText = currentYear
         </script>
     </body>

@@ -82,7 +82,6 @@ const updateUser = async (req, res) => {
 
             return res.status(200).json({ success: true, message: "User updated successfully", data: updatedUser });
         }
-
         res.status(404).json({ success: false, message: "User with specified id does not exist" });
     } catch (error) {
         res.status(500).json({ success: false, message: "An error occurred while updating user: " + error.message });
@@ -94,11 +93,9 @@ const getUser = async (req, res) => {
 
     try {
         const user = await userModels.findById(id);
-
         if (user) {
             return res.status(200).json({ success: true, data: user });
         }
-
         res.status(404).json({ success: false, message: "User with specified id does not exist" });
     } catch (error) {
         res.status(500).json({ success: false, message: "An error occurred while fetching user: " + error.message });
@@ -108,7 +105,7 @@ const getUser = async (req, res) => {
 const listUsers = async (req, res) => {
     try {
         const users = await userModels.find();
-        res.status(200).json({ success: true, data: users });
+        res.status(200).json({ success: true,count:users.length, data: users });
     } catch (error) {
         res.status(500).json({ success: false, message: "An error occurred while fetching users: " + error.message });
     }

@@ -25,7 +25,7 @@ const addSkill = async (req, res) => {
 const listSkills = async (req, res) => {
     try {
         const skills = await skillModels.find();
-        res.status(200).json({ success: true, message: "Skills list retrieved successfully", data: skills });
+        res.status(200).json({ success: true, count:skills.length, data: skills });
     } catch (error) {
         res.status(500).json({ success: false, message: "An error occurred while listing skills: " + error.message });
     }

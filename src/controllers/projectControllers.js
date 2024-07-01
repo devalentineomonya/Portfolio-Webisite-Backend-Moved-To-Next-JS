@@ -50,7 +50,7 @@ const addProject = async (req, res) => {
 const listProjects = async (req, res) => {
     try {
         const projects = await projectModel.find();
-        res.status(200).json({ success: true, length: projects.length, data: projects });
+        res.status(200).json({ success: true, count: projects.length, data: projects });
     } catch (error) {
         res.status(500).json({ success: false, message: "An error occurred while listing projects: " + error.message });
     }

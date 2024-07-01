@@ -25,13 +25,11 @@ const updateLanguage = async (req, res) => {
         const { id } = req.params;
         const { name, percentage } = req.body;
         
-        // Check if language with the same name already exists
         const checkLanguage = await languageModel.findOne({ name });
         if (checkLanguage?._id.toString() !== id) {
             return res.status(400).json({ success: false, message: "Language with this name already exists" });
         }
 
-        // Update language document
         const updatedLanguage = await languageModel.findByIdAndUpdate(id, { name, percentage }, { new: true });
         
         if (!updatedLanguage) {
@@ -48,13 +46,11 @@ const deleteLanguage = async (req, res) => {
     try {
         const { id } = req.params;
         
-        // Check if language exists
         const languageToDelete = await languageModel.findById(id);
         if (!languageToDelete) {
             return res.status(404).json({ success: false, message: "Language with the specified id does not exist" });
         }
 
-        // Delete language document
         await languageModel.findByIdAndDelete(id);
         res.status(200).json({ success: true, message: "Language has been deleted successfully" });
     } catch (error) {
@@ -64,9 +60,8 @@ const deleteLanguage = async (req, res) => {
 
 const getLanguages = async (req, res) => {
     try {
-        // Fetch all languages
         const languages = await languageModel.find();
-        res.status(200).json({ success: true, data: languages });
+        res.status(200).json({ success: true,count:languages.length, data: languages });
     } catch (error) {
         res.status(500).json({ success: false, message: "An error occurred while fetching languages" });
     }
