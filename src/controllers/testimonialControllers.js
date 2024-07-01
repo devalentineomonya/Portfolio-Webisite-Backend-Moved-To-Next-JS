@@ -1,4 +1,4 @@
-const testimonialModel = require('../models/testimonial'); // Assuming your model file path is correct
+const testimonialModel = require('../models/testimonialsModels');
 const { testimonialSchema } = require('../validation/JoiSchemas');
 
 // Create a new testimonial
@@ -13,13 +13,13 @@ const addTestimonial = async (req, res) => {
         res.status(201).json({ success: true, message: 'Testimonial added successfully', data: newTestimonial });
     } catch (error) {
         if (error.isJoi) {
-                return res.status(400).json({ success: false, message: error.details[0].message });
+            return res.status(400).json({ success: false, message: error.details[0].message });
         }
         res.status(500).json({ success: false, message: 'Failed to add testimonial', error: error.message });
     }
 }
 // Get all testimonials
-const getTestimonials = async (req, res) => {
+const listTestimonials = async (req, res) => {
     try {
         const testimonials = await testimonialModel.find();
         res.status(200).json({ success: true, count: testimonials.length, data: testimonials });
@@ -27,6 +27,19 @@ const getTestimonials = async (req, res) => {
         res.status(500).json({ success: false, message: 'Failed to fetch testimonials', error: error.message });
     }
 };
+
+const getTestimonial = async (req, res) => {
+    try {
+        const { id } = req.params
+        const testimonial = await testimonialModel.findById(id)
+        if (!testimonial) return res.status(404).json({ success: false, message: "Testimonial with the specified id was not found" })
+
+        res.status(200).json({ success: true, data: testimonial })
+
+    } catch (error) {
+        res.status(500).json({ success: false, message: 'Failed to fetch testimonial', error: error.message })
+    }
+}
 
 // Update a testimonial
 const updateTestimonial = async (req, res) => {
@@ -59,4 +72,4 @@ const deleteTestimonial = async (req, res) => {
     }
 };
 
-module.exports = { addTestimonial, getTestimonials, updateTestimonial, deleteTestimonial };
+module.exports = { addTestimonial, listTestimonials, getTestimonial, updateTestimonial, deleteTestimonial };

@@ -3,11 +3,8 @@ const { skillSchema } = require('../validation/JoiSchemas');
 
 const addSkill = async (req, res) => {
     const { name, description, iconsImport, iconComponent } = req.body;
-
     try {
-
         await skillSchema.validateAsync({ name, description, iconsImport, iconComponent });
-
         const newSkill = new skillModels({
             name,
             description,
@@ -33,6 +30,8 @@ const listSkills = async (req, res) => {
         res.status(500).json({ success: false, message: "An error occurred while listing skills: " + error.message });
     }
 };
+
+
 
 const updateSkill = async (req, res) => {
     const { id } = req.params;
