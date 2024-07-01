@@ -1,5 +1,6 @@
 const express = require('express');
 const dotenv = require('dotenv');
+const path = require('path');
 const connectDb = require('./src/config/databaseConnection');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -18,9 +19,13 @@ const port = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'src/public')));
 app.use(cors());
+app.set("view engine", "ejs")
+app.set("views","src/views")
 
-app.get("/", (req, res) => res.render("src/views"));
+
+app.get("/", (req, res) => res.render("index"));
 
 app.use("/api/images", express.static('src/uploads'));
 app.use("/api/projects", projectRouter);
