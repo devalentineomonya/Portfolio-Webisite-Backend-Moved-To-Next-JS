@@ -5,6 +5,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Devalentine API | Documentation</title>
+    <meta name="description" content="This website provides endpoints to Valentine Omonya's portfolio website api. Devalentine provides resources such as  images, projects, stacks, languages, partners, and testimonials. ">
         <link rel="shortcut icon" href="/icons/logo.png" type="image/x-icon">
         <link rel="stylesheet" href="/css/styles.css">
     </head>
@@ -22,7 +23,7 @@
                     <h2>API Overview</h2>
                     <p>The API for my portfolio website is designed to provide a structured and efficient way to
                         manage and serve various resources essential for your portfolio. It includes endpoints for
-                        handling images, projects, skills, languages, partners, and testimonials. Each resource has its
+                        handling images, projects, stacks, languages, partners, and testimonials. Each resource has its
                         dedicated endpoint, ensuring modularity and ease of maintenance.</p>
                     <p>
                         The
@@ -30,8 +31,8 @@
                     visual content into your portfolio. The
                     <pre>`/api/projects</pre>` endpoint, managed by the
                     `projectRouter`, handles the creation, reading, updating, and deletion of project entries,
-                    showcasing your work effectively. Additionally, the API includes endpoints for managing skills
-                    <pre>(`/api/skills`)</pre>, languages
+                    showcasing your work effectively. Additionally, the API includes endpoints for managing stacks
+                    <pre>(`/api/stacks`)</pre>, languages
                     <pre>(`/api/languages`)</pre>, partners
                     <pre>(`/api/partners`)</pre>, and testimonials
                     <pre>(`/api/testimonials`)</pre>, each facilitating the management of respective data sets and
@@ -41,7 +42,7 @@
                 </section>
                 <section class="endpoints">
                     <h2>API Endpoints</h2>
-                    <p>Note: ONLY GET ENDPOINTS ARE AVILABLE TO PUBLIC OTHER REQUIRE USER TO BE LOGGED IN AS ADMIN</p>
+                    <p>NOTE: Only <strong>`GET `</strong> endpoints are available to the public.The other endpoints require the user to be authenticated.</p>
                     <h6>Projects</h6>
                     <p>API endpoint for projects CRUD operations.</p>
                     <pre><code>GET https://devalentineapi.onrender.app/api/projects/list</code></pre>
@@ -49,12 +50,12 @@
                     <pre><code>PUT https://devalentineapi.onrender.app/api/projects/update/{projectId}</code></pre>
                     <pre><code>DELETE https://devalentineapi.onrender.app/api/projects/delete/{projectId}</code></pre>
 
-                    <h6>Skills</h6>
-                    <p>API endpoint to get all the Skills</p>
-                    <pre><code>GET https://devalentineapi.onrender.app/api/skills/list</code></pre>
-                    <pre><code>POST https://devalentineapi.onrender.app/api/skills/add</code></pre>
-                    <pre><code>PUT https://devalentineapi.onrender.app/api/skills/update/{skillId}</code></pre>
-                    <pre><code>DELETE https://devalentineapi.onrender.app/api/skills/delete/{skillId}</code></pre>
+                    <h6>Tech Stack</h6>
+                    <p>API endpoint to get all the stacks</p>
+                    <pre><code>GET https://devalentineapi.onrender.app/api/stacks/list</code></pre>
+                    <pre><code>POST https://devalentineapi.onrender.app/api/stacks/add</code></pre>
+                    <pre><code>PUT https://devalentineapi.onrender.app/api/stacks/update/{stackId}</code></pre>
+                    <pre><code>DELETE https://devalentineapi.onrender.app/api/stacks/delete/{stackId}</code></pre>
 
                     <h6>Images</h6>
                     <p>API endpoint to get all images</p>

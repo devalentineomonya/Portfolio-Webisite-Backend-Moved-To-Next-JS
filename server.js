@@ -7,10 +7,10 @@ const cors = require('cors');
 const projectRouter = require('./src/routes/projectRoutes');
 const usersRouter = require('./src/routes/userRoutes');
 const authRouter = require('./src/routes/authRoutes');
-const skillsRouter = require('./src/routes/skillRoutes');
 const languagesRouter = require('./src/routes/languageRoutes');
 const partnersRouter = require('./src/routes/partnerRoutes');
 const testimonialsRouter = require('./src/routes/testimonialRoutes');
+const stacksRouter = require('./src/routes/stackRoutes');
 
 dotenv.config();
 const app = express();
@@ -19,7 +19,7 @@ const port = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'src/public')));
 app.use(cors());
 app.set("view engine", "ejs")
 app.set("views","src/views")
@@ -27,11 +27,11 @@ app.set("views","src/views")
 
 app.get("/", (req, res) => res.render("index"));
 
-app.use("/api/images", express.static('src/uploads'));
+app.use("/api/images", express.static(path.join(__dirname,'src/uploads')));
 app.use("/api/projects", projectRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/auth", authRouter);
-app.use("/api/skills", skillsRouter);
+app.use("/api/stacks",stacksRouter );
 app.use("/api/languages", languagesRouter);
 app.use("/api/partners", partnersRouter);
 app.use("/api/testimonials", testimonialsRouter)

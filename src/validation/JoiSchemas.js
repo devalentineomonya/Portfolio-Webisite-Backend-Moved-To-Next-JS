@@ -17,17 +17,17 @@ const projectSchema = Joi.object({
     liveLink: Joi.string().uri()
 });
 
-// Skill Schema
-const skillSchema = Joi.object({
+// stack Schema
+const stackSchema = Joi.object({
     name: Joi.string().required(),
     description: Joi.string(),
-    iconsImport: Joi.string(),
     iconComponent: Joi.string()
 });
 
 // Language Schema
 const languageSchema = Joi.object({
-    name: Joi.string().required()
+    name: Joi.string().required(),
+    percentage:Joi.number().required()
 });
 
 // Partner Schema
@@ -46,7 +46,7 @@ const testimonialSchema = Joi.object({
 module.exports = {
     userSchema,
     projectSchema,
-    skillSchema,
+    stackSchema,
     languageSchema,
     partnerSchema,
     testimonialSchema

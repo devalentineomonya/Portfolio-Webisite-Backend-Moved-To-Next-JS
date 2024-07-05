@@ -1,9 +1,9 @@
 const languageModel = require('../models/languageModels');
-const {projectSchema} = require('../validation/JoiSchemas')
+const { languageSchema } = require('../validation/JoiSchemas');
 const addLanguage = async (req, res) => {
     try {
         const { name, percentage } = req.body;
-        const validatedData = await projectSchema.validateAsync({ name, percentage });
+        const validatedData = await languageSchema.validateAsync({ name, percentage });
         const checkLanguage = await languageModel.findOne({ name });
         if (checkLanguage) {
             return res.status(400).json({ success: false, message: "This language already exists in your database" });
