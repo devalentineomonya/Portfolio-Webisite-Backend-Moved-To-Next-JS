@@ -43,11 +43,20 @@ const testimonialSchema = Joi.object({
     message: Joi.string().required()
 });
 
+const collaboratorSchema = Joi.object({
+    name: Joi.string().required(),
+    role: Joi.string().required(),
+    image: Joi.string().uri().required(),
+    githubLink: Joi.string().uri().required()
+});
+
+
 module.exports = {
     userSchema,
     projectSchema,
     stackSchema,
     languageSchema,
     partnerSchema,
-    testimonialSchema
+    testimonialSchema,
+    collaboratorSchema
 };

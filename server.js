@@ -11,6 +11,7 @@ const languagesRouter = require('./src/routes/languageRoutes');
 const partnersRouter = require('./src/routes/partnerRoutes');
 const testimonialsRouter = require('./src/routes/testimonialRoutes');
 const stacksRouter = require('./src/routes/stackRoutes');
+const collaboratorRoutes = require('./src/routes/collaboratorRoutes');
 
 dotenv.config();
 const app = express();
@@ -34,6 +35,7 @@ app.use("/api/auth", authRouter);
 app.use("/api/stacks",stacksRouter );
 app.use("/api/languages", languagesRouter);
 app.use("/api/partners", partnersRouter);
+app.use("/api/collaborators", collaboratorRoutes)
 app.use("/api/testimonials", testimonialsRouter)
 
 app.use("/*", (req, res) => {
