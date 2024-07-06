@@ -8,7 +8,7 @@ const projectRouter = require('./src/routes/projectRoutes');
 const usersRouter = require('./src/routes/userRoutes');
 const authRouter = require('./src/routes/authRoutes');
 const languagesRouter = require('./src/routes/languageRoutes');
-const partnersRouter = require('./src/routes/partnerRoutes');
+const certificatesRouter = require('./src/routes/certificateRoutes');
 const testimonialsRouter = require('./src/routes/testimonialRoutes');
 const stacksRouter = require('./src/routes/stackRoutes');
 const collaboratorRoutes = require('./src/routes/collaboratorRoutes');
@@ -34,7 +34,7 @@ app.use("/api/users", usersRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/stacks",stacksRouter );
 app.use("/api/languages", languagesRouter);
-app.use("/api/partners", partnersRouter);
+app.use("/api/certificates", certificatesRouter);
 app.use("/api/collaborators", collaboratorRoutes)
 app.use("/api/testimonials", testimonialsRouter)
 
