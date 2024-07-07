@@ -7,6 +7,14 @@ const addCollaborator = async (req, res) => {
     try {
         await collaboratorSchema.validateAsync({ name, role, image, githubLink });
 
+        const checkCollaborator = await collaboratorModels.findOne({
+            $or: [
+                { name },
+                { githubLink }
+            ]
+        })
+        if (checkCollaborator) return res.status(400).json({ success: false, message: "Collaborator with the same name or github link already exists" })
+
         const newCollaborator = new collaboratorModels({
             name,
             role,

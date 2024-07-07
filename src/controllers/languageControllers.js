@@ -5,9 +5,8 @@ const addLanguage = async (req, res) => {
         const { name, percentage } = req.body;
         const validatedData = await languageSchema.validateAsync({ name, percentage });
         const checkLanguage = await languageModel.findOne({ name });
-        if (checkLanguage) {
-            return res.status(400).json({ success: false, message: "This language already exists in your database" });
-        }
+        if (checkLanguage) return res.status(400).json({ success: false, message: "This language already exists in your database" });
+        
         const language = new languageModel(validatedData);
         await language.save();
 

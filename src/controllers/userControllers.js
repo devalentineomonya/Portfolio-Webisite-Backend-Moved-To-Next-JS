@@ -8,7 +8,6 @@ const addUser = async (req, res) => {
     const image = req.file ? req.file.filename : null;
 
     try {
-        // Validate the request data against the userSchema
         await userSchema.validateAsync({ firstName, lastName, email, password });
 
         const hashedPassword = await bcrypt.hash(password, 15);
