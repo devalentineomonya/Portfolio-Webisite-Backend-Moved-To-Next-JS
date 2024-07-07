@@ -4,7 +4,11 @@ const path = require('path');
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, 'src/uploads');
+        const uploadDir = 'src/uploads';
+        if (!fs.existsSync(uploadDir)) {
+            fs.mkdirSync(uploadDir, { recursive: true });
+        }
+        cb(null, uploadDir);
     },
     filename: function (req, file, cb) {
         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
@@ -25,11 +29,11 @@ const multerFilter = (req, file, cb) => {
 const upload = multer({
     storage: storage,
     fileFilter: multerFilter,
-    limits: { fileSize: 5000000 } // 1MB file size limit
+    limits: { fileSize: 5000000 }
 });
 
 const unlink = (image) => {
-    const imagePath = path.join(__dirname, '../src/uploads', image);
+    const imagePath = path.join(__dirname, '../uploads', image);
     fs.unlink(imagePath, (err) => {
         if (err) {
             console.error(`Error deleting file ${image}: ${err}`);

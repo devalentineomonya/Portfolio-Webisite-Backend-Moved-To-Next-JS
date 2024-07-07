@@ -43,7 +43,7 @@ const addProject = async (req, res) => {
             return res.status(400).json({ success: false, message: error.details[0].message });
         }
         unlink(image);
-        res.status(500).json({ success: false, message: "An error occurred while saving project: " + error.message });
+        res.status(500).json({ success: false, message: "An error occurred while saving project",error: error.message });
     }
 };
 
@@ -52,14 +52,14 @@ const listProjects = async (req, res) => {
         const projects = await projectModel.find();
         res.status(200).json({ success: true, count: projects.length, data: projects });
     } catch (error) {
-        res.status(500).json({ success: false, message: "An error occurred while listing projects: " + error.message });
+        res.status(500).json({ success: false, message: "An error occurred while listing projects", error: error.message });
     }
 };
 
 const updateProject = async (req, res) => {
     const projectId = req.params.id;
     const { name, description, technologies, githubLink, liveLink } = req.body;
-    const image = req.file ? req.file.filename : null;
+    const image = req.file ? req?.file?.filename : null;
 
     try {
         const project = await projectModel.findById(projectId);
@@ -89,7 +89,7 @@ const updateProject = async (req, res) => {
 
         res.status(404).json({ success: false, message: "Project with the specified id was not found" });
     } catch (error) {
-        res.status(500).json({ success: false, message: "An error occurred while updating project: " + error.message });
+        res.status(500).json({ success: false, message: "An error occurred while updating project", error: error.message });
     }
 };
 
@@ -107,7 +107,7 @@ const deleteProject = async (req, res) => {
 
         res.status(404).json({ success: false, message: "Project with specified id was not found" });
     } catch (error) {
-        res.status(500).json({ success: false, message: "An error occurred while deleting project: " + error.message });
+        res.status(500).json({ success: false, message: "An error occurred while deleting project ", error: error.message });
     }
 };
 
