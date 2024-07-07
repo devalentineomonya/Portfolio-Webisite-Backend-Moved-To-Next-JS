@@ -5,6 +5,9 @@ const addStack = async (req, res) => {
     const { name, description, iconComponent } = req.body;
     try {
         await stackSchema.validateAsync({ name, description, iconComponent });
+        const checkStack = await stackModels.find({ name: name })
+        if (checkStack) return res.status(400).json({ success: false, message: "Tech Stack with the same name already exist" })
+
         const newStack = new stackModels({
             name,
             description,
@@ -35,8 +38,10 @@ const updateStack = async (req, res) => {
 
     try {
         const stack = await stackModels.findById(id);
+        const checkStack = await stackModels.findOne({ name })
 
         if (!stack) return res.status(404).json({ success: false, message: "Stack with the specified id was not found" });
+        if (checkStack) return res.status(400).json({ success: false, message: "Tech Stack with the same name already exist" })
 
         const updatedStack = await stackModels.findByIdAndUpdate(id, {
             name,

@@ -47,6 +47,11 @@ const updateCertificate = async (req, res) => {
         if (!partner) {
             return res.status(404).json({ success: false, message: "Certificate with the specified id was not found" });
         }
+          const exists = await certificatesModel.findOne({ name });
+        if (exists) {
+            unlink(image);
+            return res.status(400).json({ success: false, message: `${name} already exists` });
+        }
 
         await certificatesModel.findByIdAndUpdate(id, { name }, { new: true });
         res.status(200).json({ success: true, message: "Certificate has been updated successfully" });
