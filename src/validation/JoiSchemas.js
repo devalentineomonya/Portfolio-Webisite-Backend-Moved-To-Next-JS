@@ -31,8 +31,8 @@ const languageSchema = Joi.object({
     percentage: Joi.number().required()
 });
 
-// Partner Schema
-const partnerSchema = Joi.object({
+// Certificates Schema
+const certificateSchema = Joi.object({
     name: Joi.string().required(),
     image: Joi.string()
 });
@@ -57,7 +57,7 @@ module.exports = {
     projectSchema,
     stackSchema,
     languageSchema,
-    partnerSchema,
+    certificateSchema,
     testimonialSchema,
     collaboratorSchema
 };

@@ -6,7 +6,7 @@ const { upload } = require('../middlewares/uploadMiddleware');
 
 certificatesRouter
     .get("/list", getCertificates)
-    .post("/add", authMiddleware, isAdmin, upload.single("image"), addCertificate)
+    .post("/add", authMiddleware, isAdmin, upload, addCertificate)
     .put("/update/:id", authMiddleware, isAdmin, updateCertificate)
     .delete("/delete/:id", authMiddleware, isAdmin, deleteCertificate);
 

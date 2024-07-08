@@ -6,7 +6,7 @@ const { upload } = require('../middlewares/uploadMiddleware');
 
 projectRouter
     .get("/list", listProjects)
-    .post("/add", authMiddleware, isAdmin, upload.single("image"), addProject)
+    .post("/add", authMiddleware, isAdmin, upload, addProject)
     .put("/update/:id", authMiddleware, isAdmin, updateProject)
     .delete("/delete/:id", authMiddleware, isAdmin, deleteProject);
 

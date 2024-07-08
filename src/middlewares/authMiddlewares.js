@@ -22,7 +22,7 @@ const authMiddleware = async (req, res, next) => {
         res.status(401).json({ success: false, message: "User token is expired or invalid. Please provide a valid token or log in again." });
 
     } catch (error) {
-        res.status(500).json({ success: false, message: "An error occurred while verifying user: " + error.message });
+        res.status(500).json({ success: false, message: "An error occurred while verifying user: " , error:error.message });
     }
 };
 
@@ -37,7 +37,7 @@ const isAdmin = (req, res, next) => {
         res.status(403).json({ success: false, message: "You don't have admin privileges to perform this action." });
 
     } catch (error) {
-        res.status(500).json({ success: false, message: "An error occurred while verifying user: " + error.message });
+        res.status(500).json({ success: false, message: "An error occurred while verifying user: " , error:error.message });
     }
 };
 

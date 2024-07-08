@@ -39,7 +39,7 @@ const addUser = async (req, res) => {
             // Joi validation error
             return res.status(400).json({ success: false, message: error.details[0].message });
         }
-        res.status(500).json({ success: false, message: "An error occurred while adding user: " + error.message });
+        res.status(500).json({ success: false, message: "An error occurred while adding user: ", error: error.message });
     }
 };
 
@@ -62,7 +62,7 @@ const deleteUser = async (req, res) => {
 
         res.status(400).json({ success: false, message: "Cannot delete current user" });
     } catch (error) {
-        res.status(500).json({ success: false, message: "An error occurred while deleting user: " + error.message });
+        res.status(500).json({ success: false, message: "An error occurred while deleting user: ", error: error.message });
     }
 };
 
@@ -83,7 +83,7 @@ const updateUser = async (req, res) => {
         }
         res.status(404).json({ success: false, message: "User with specified id does not exist" });
     } catch (error) {
-        res.status(500).json({ success: false, message: "An error occurred while updating user: " + error.message });
+        res.status(500).json({ success: false, message: "An error occurred while updating user: ", error: error.message });
     }
 };
 
@@ -97,16 +97,16 @@ const getUser = async (req, res) => {
         }
         res.status(404).json({ success: false, message: "User with specified id does not exist" });
     } catch (error) {
-        res.status(500).json({ success: false, message: "An error occurred while fetching user: " + error.message });
+        res.status(500).json({ success: false, message: "An error occurred while fetching user: ", error: error.message });
     }
 };
 
 const listUsers = async (req, res) => {
     try {
         const users = await userModels.find();
-        res.status(200).json({ success: true,count:users.length, data: users });
+        res.status(200).json({ success: true, count: users.length, data: users });
     } catch (error) {
-        res.status(500).json({ success: false, message: "An error occurred while fetching users: " + error.message });
+        res.status(500).json({ success: false, message: "An error occurred while fetching users: ", error: error.message });
     }
 };
 

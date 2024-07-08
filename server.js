@@ -27,6 +27,11 @@ app.set("views","src/views")
 
 app.get("/", (req, res) => res.render("index"));
 
+app.get("/getip", (req,res)=>{
+   console.log(res)
+   res.send("sent")
+})
+
 app.use("/api/images", express.static(path.join(__dirname,'src/uploads')));
 app.use("/api/projects", projectRouter);
 app.use("/api/users", usersRouter);

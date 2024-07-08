@@ -22,7 +22,7 @@ const multerFilter = (req, file, cb) => {
     if (file.mimetype.startsWith('image')) {
         cb(null, true);
     } else {
-        cb(new Error('Unsupported file format'), false);
+        cb(Error('Unsupported file format'));
     }
 };
 
@@ -30,7 +30,7 @@ const upload = multer({
     storage: storage,
     fileFilter: multerFilter,
     limits: { fileSize: 5000000 }
-});
+}).single("image");
 
 const unlink = (image) => {
     const imagePath = path.join(__dirname, '../uploads', image);

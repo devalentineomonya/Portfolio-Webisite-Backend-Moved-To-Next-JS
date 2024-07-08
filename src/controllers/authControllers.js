@@ -19,7 +19,7 @@ const login = async (req, res) => {
         const token = userToken(user._id);
         return res.status(200).json({ success: true, message: "Logged in successfully", token });
     } catch (error) {
-        return res.status(500).json({ success: false, message: `An error occurred while authenticating user: ${error.message}` });
+        return res.status(500).json({ success: false, message: "An error occurred while authenticating user", error:error.message });
     }
 };
 
