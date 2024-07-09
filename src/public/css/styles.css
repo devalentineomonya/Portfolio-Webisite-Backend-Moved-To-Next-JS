@@ -93,6 +93,7 @@ code {
 .endpoints h6 {
     margin-top: 20px;
     font-size: 20px;
+text-transform: capitalize;
 }
 
 .endpoints p {

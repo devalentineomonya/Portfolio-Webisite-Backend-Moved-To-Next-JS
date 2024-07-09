@@ -5,7 +5,8 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Devalentine API | Documentation</title>
-    <meta name="description" content="This website provides endpoints to Valentine Omonya's portfolio website api. Devalentine provides resources such as  images, projects, stacks, languages, certificates, and testimonials. ">
+        <meta name="description"
+            content="This website provides endpoints to Valentine Omonya's portfolio website api. Devalentine provides resources such as  images, projects, stacks, languages, certificates, and testimonials. ">
         <link rel="shortcut icon" href="/icons/logo.png" type="image/x-icon">
         <link rel="stylesheet" href="/css/styles.css">
     </head>
@@ -23,7 +24,8 @@
                     <h2>API Overview</h2>
                     <p>The API for my portfolio website is designed to provide a structured and efficient way to
                         manage and serve various resources essential for your portfolio. It includes endpoints for
-                        handling images, projects, stacks, languages, certificates, and testimonials. Each resource has its
+                        handling images, projects, stacks, languages, certificates, and testimonials. Each resource has
+                        its
                         dedicated endpoint, ensuring modularity and ease of maintenance.</p>
                     <p>
                         The
@@ -42,58 +44,54 @@
                 </section>
                 <section class="endpoints">
                     <h2>API Endpoints</h2>
-                    <p>NOTE: Only <strong>`GET `</strong> endpoints are available to the public.The other endpoints require the user to be authenticated.</p>
-                    <h6>Projects</h6>
-                    <p>API endpoint for projects CRUD operations.</p>
-                    <pre><code>GET https://devalentineapi.onrender.app/api/projects/list</code></pre>
-                    <pre><code>POST https://devalentineapi.onrender.app/api/projects/add</code></pre>
-                    <pre><code>PUT https://devalentineapi.onrender.app/api/projects/update/{projectId}</code></pre>
-                    <pre><code>DELETE https://devalentineapi.onrender.app/api/projects/delete/{projectId}</code></pre>
+                    <p>NOTE: Only <strong>`GET `</strong> endpoints are available to the public.The other endpoints
+                        require the user to be authenticated.</p>
 
-                    <h6>Tech Stack</h6>
-                    <p>API endpoint to get all the stacks</p>
-                    <pre><code>GET https://devalentineapi.onrender.app/api/stacks/list</code></pre>
-                    <pre><code>POST https://devalentineapi.onrender.app/api/stacks/add</code></pre>
-                    <pre><code>PUT https://devalentineapi.onrender.app/api/stacks/update/{stackId}</code></pre>
-                    <pre><code>DELETE https://devalentineapi.onrender.app/api/stacks/delete/{stackId}</code></pre>
+                    <% const routes=["projects", "stacks" , "images" , "languages" ,"certificates","testimonials"] %>
 
-                    <h6>Images</h6>
-                    <p>API endpoint to get all images</p>
-                    <pre><code>GET https://devalentineapi.onrender.app/api/images/{imageName}</code></pre>
+                        <% routes.forEach((route)=>{ %>
+                            <%if (route==="images" ){%>
+                                <h6>Images</h6>
+                                <p>API endpoint to get all images</p>
+                                <pre><code>GET https://devalentineapi.onrender.app/api/images/{imageName}</code></pre>
+                                <%} else { %>
+                                    <h6>
+                                        <%=route%>
+                                    </h6>
+                                    <p>API endpoint for <%=route%> CRUD operations.</p>
+                                    <pre><code>GET https://devalentineapi.onrender.app/api/<%=route%>/list</code></pre>
+                                    <pre><code>
 
-                    <h6>Languages</h6>
-                    <p>API endpoint to get all the languages</p>
-                    <pre><code>GET https://devalentineapi.onrender.app/api/languages/list</code></pre>
-                    <pre><code>POST https://devalentineapi.onrender.app/api/languages/add</code></pre>
-                    <pre><code>PUT https://devalentineapi.onrender.app/api/languages/update/{languagesId}</code></pre>
-                    <pre><code>DELETE https://devalentineapi.onrender.app/api/languages/{languagesId}</code></pre>
+                                        <% const fetchData = async () => { %>
+                                            <% const response = await fetch("/api/<%=route%>/list",{ %>
+                                                <% method: "GET" %>
+                                            <% }) %>
+                                            <% const data = await response.json().data %>
+                                            console.log(data)
+                                        <% } %>
+                                        <% fetchData() %>
+                                    </code></pre>
+                                    <pre><code>POST https://devalentineapi.onrender.app/api/<%=route%>/add</code></pre>
+                                    <pre><code>PUT https://devalentineapi.onrender.app/api/<%=route%>/update/{<%=route.substring(0, route.length-1)%>Id}</code></pre>
+                                    <pre><code>DELETE https://devalentineapi.onrender.app/api/<%=route%>/delete/{<%=route.substring(0, route.length-1)%>Id}</code></pre>
+                                    <% }%>
+                                        <%})%>
 
-                    <h6>Certificates</h6>
-                    <p>API endpoint to get all the certificates</p>
-                    <pre><code>GET https://devalentineapi.onrender.app/api/certificates/list</code></pre>
-                    <pre><code>POST https://devalentineapi.onrender.app/api/certificates/add</code></pre>
-                    <pre><code>PUT https://devalentineapi.onrender.app/api/certificates/update/{certificateId}</code></pre>
-                    <pre><code>DELETE https://devalentineapi.onrender.app/api/certificates/delete/{certificateId}</code></pre>
 
-                    <h6>Testimonials</h6>
-                    <p>API endpoint to get all the testimonials</p>
-                    <pre><code>GET https://devalentineapi.onrender.app/api/testimonials/list</code></pre>
-                    <pre><code>POST https://devalentineapi.onrender.app/api/testimonials/add</code></pre>
-                    <pre><code>PUT https://devalentineapi.onrender.app/api/testimonials/update/{testimonialsId}</code></pre>
-                    <pre><code>DELETE https://devalentineapi.onrender.app/api/testimonials/delete/{testimonialsId}</code></pre>
+
+
                 </section>
             </div>
         </main>
         <footer>
             <a href="http://devalentineomonya.vercel.app/" target="_blank"> &copy; DevalentineAPI </a>
-            <span id="year"></span>
+            <span id="year">
+                <%= new Date().getFullYear()%>
+            </span>
             | <span>All rights reserved.</span>
         </footer>
-        <script>
-            const year = document.getElementById("year")
-            const currentYear = new Date().getFullYear()
-            year.innerText = currentYear
-        </script>
+
+
     </body>
 
 </html>
