@@ -43,7 +43,8 @@ app.use("/api/collaborators", collaboratorRoutes)
 app.use("/api/testimonials", testimonialsRouter)
 
 app.use("/*", (req, res) => {
-    res.status(404).json({ success: false, message: "The Route you visited is unknown to us" })
+
+    res.status(404).json({ success: false, message: "The Route you visited is unknown to us, Check if both route and request method are correct" })
 })
 
 

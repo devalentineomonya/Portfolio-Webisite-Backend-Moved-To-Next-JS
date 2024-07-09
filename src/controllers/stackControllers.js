@@ -17,7 +17,7 @@ const addStack = async (req, res) => {
         res.status(201).json({ success: true, message: "Stack added successfully" });
     } catch (error) {
         if (error.isJoi) return res.status(400).json({ success: false, message: error.details[0].message });
-        res.status(500).json({ success: false, message: "An error occurred while adding stack: ", error: error.message });
+        res.status(500).json({ success: false, message: "An error occurred while adding stack: ", error:error.message });
     }
 };
 
@@ -26,7 +26,7 @@ const listStacks = async (req, res) => {
         const stacks = await stackModels.find();
         res.status(200).json({ success: true, count: stacks.length, data: stacks });
     } catch (error) {
-        res.status(500).json({ success: false, message: "An error occurred while listing stacks: ", error: error.message });
+        res.status(500).json({ success: false, message: "An error occurred while listing stacks: ", error:error.message });
     }
 };
 
@@ -38,7 +38,8 @@ const updateStack = async (req, res) => {
 
     try {
         const stack = await stackModels.findById(id);
-        const checkStack = await stackModels.findOne({ name })
+        const checkStack = await stackModels.findOne({ name });
+        // , _id: { $not: id }
 
         if (!stack) return res.status(404).json({ success: false, message: "Stack with the specified id was not found" });
         if (checkStack) return res.status(400).json({ success: false, message: "Tech Stack with the same name already exist" })
@@ -51,7 +52,7 @@ const updateStack = async (req, res) => {
 
         res.status(200).json({ success: true, message: "Stack updated successfully", data: updatedStack });
     } catch (error) {
-        res.status(500).json({ success: false, message: "An error occurred while updating stack: ", error: error.message });
+        res.status(500).json({ success: false, message: "An error occurred while updating stack: ", error:error.message });
     }
 };
 
@@ -65,7 +66,7 @@ const deleteStack = async (req, res) => {
         await stackModels.findByIdAndDelete(id);
         res.status(200).json({ success: true, message: "Stack deleted successfully" });
     } catch (error) {
-        res.status(500).json({ success: false, message: "An error occurred while deleting stack: ", error: error.message });
+        res.status(500).json({ success: false, message: "An error occurred while deleting stack: ", error:error.message });
     }
 };
 
