@@ -2,16 +2,16 @@ const stackModels = require('../models/stackModels');
 const { stackSchema } = require('../validation/JoiSchemas');
 
 const addStack = async (req, res) => {
-    const { name, description, iconComponent } = req.body;
+    const { name, description, iconName } = req.body;
     try {
-        await stackSchema.validateAsync({ name, description, iconComponent });
+        await stackSchema.validateAsync({ name, description, iconName });
         const checkStack = await stackModels.find({ name: name })
         if (checkStack) return res.status(400).json({ success: false, message: "Tech Stack with the same name already exist" })
 
         const newStack = new stackModels({
             name,
             description,
-            iconComponent
+            iconName
         });
         await newStack.save();
         res.status(201).json({ success: true, message: "Stack added successfully" });
@@ -34,7 +34,7 @@ const listStacks = async (req, res) => {
 
 const updateStack = async (req, res) => {
     const { id } = req.params;
-    const { name, description, iconComponent } = req.body;
+    const { name, description, iconName } = req.body;
 
     try {
         const stack = await stackModels.findById(id);
@@ -47,7 +47,7 @@ const updateStack = async (req, res) => {
         const updatedStack = await stackModels.findByIdAndUpdate(id, {
             name,
             description,
-            iconComponent
+            iconName
         }, { new: true });
 
         res.status(200).json({ success: true, message: "Stack updated successfully", data: updatedStack });

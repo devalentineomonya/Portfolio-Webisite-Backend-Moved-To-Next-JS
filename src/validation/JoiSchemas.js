@@ -22,7 +22,7 @@ const projectSchema = Joi.object({
 const stackSchema = Joi.object({
     name: Joi.string().required(),
     description: Joi.string(),
-    iconComponent: Joi.string()
+    iconName: Joi.string()
 });
 
 // Language Schema
