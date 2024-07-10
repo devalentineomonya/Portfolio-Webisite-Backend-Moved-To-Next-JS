@@ -44,22 +44,23 @@ const updateCertificate = async (req, res) => {
     const { name } = req.body;
 
     try {
-        const certificate = await certificatesModel.findById(id);
-        if (!certificate) {
+        const existingCertificate = await certificatesModel.findById(id);
+        if (!existingCertificate) {
             return res.status(404).json({ success: false, message: "Certificate with the specified id was not found" });
         }
-          const exists = await certificatesModel.findOne({ name });
-        if (exists) {
-            unlink(image);
+
+        const otherCertificateWithSameName = await certificatesModel.findOne({ name, _id: { $ne: id } });
+        if (otherCertificateWithSameName) {
             return res.status(400).json({ success: false, message: `${name} already exists` });
         }
 
         await certificatesModel.findByIdAndUpdate(id, { name }, { new: true });
         res.status(200).json({ success: true, message: "Certificate has been updated successfully" });
     } catch (error) {
-        res.status(500).json({ success: false, message: "An error occurred while updating certificate: " , error:error.message });
+        res.status(500).json({ success: false, message: "An error occurred while updating certificate", error: error.message });
     }
 };
+
 
 const deleteCertificate = async (req, res) => {
     const { id } = req.params;

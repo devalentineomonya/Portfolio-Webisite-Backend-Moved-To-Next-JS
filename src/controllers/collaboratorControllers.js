@@ -55,9 +55,16 @@ const updateCollaborator = async (req, res) => {
     const { id } = req.params;
 
     try {
-        const collaborator = await collaboratorModels.findById(id);
+        const existingCollaborator = await collaboratorModels.findById(id);
+        if (!existingCollaborator) {
+            return res.status(404).json({ success: false, message: "Collaborator with specified id does not exist" });
+        }
 
-        if (!collaborator) return res.status(404).json({ success: false, message: "Collaborator with specified id does not exist" });
+        const { name } = req.body;
+        const otherCollaboratorWithSameName = await collaboratorModels.findOne({ name, _id: { $ne: id } });
+        if (otherCollaboratorWithSameName) {
+            return res.status(400).json({ success: false, message: "Another collaborator with the same name already exists" });
+        }
 
         const updatedCollaborator = await collaboratorModels.findByIdAndUpdate(id, {
             name: req.body.name,
@@ -68,11 +75,11 @@ const updateCollaborator = async (req, res) => {
 
         return res.status(200).json({ success: true, message: "Collaborator updated successfully", data: updatedCollaborator });
 
-
     } catch (error) {
-        res.status(500).json({ success: false, message: "An error occurred while updating collaborator: " ,error: error.message });
+        res.status(500).json({ success: false, message: "An error occurred while updating collaborator", error: error.message });
     }
 };
+
 
 
 const listCollaborators = async (req, res) => {

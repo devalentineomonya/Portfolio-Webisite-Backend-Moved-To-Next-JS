@@ -38,8 +38,8 @@ const updateStack = async (req, res) => {
 
     try {
         const stack = await stackModels.findById(id);
-        const checkStack = await stackModels.findOne({ name });
-        // , _id: { $not: id }
+        const checkStack = await stackModels.findOne({name, _id: { $ne: id }});
+       
 
         if (!stack) return res.status(404).json({ success: false, message: "Stack with the specified id was not found" });
         if (checkStack) return res.status(400).json({ success: false, message: "Tech Stack with the same name already exist" })

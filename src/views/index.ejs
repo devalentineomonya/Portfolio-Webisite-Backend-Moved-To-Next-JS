@@ -30,7 +30,7 @@
                 <h2>API Endpoints</h2>
                 <p>NOTE: Only <strong>`GET`</strong> endpoints are available to the public. The other endpoints require the user to be authenticated.</p>
 
-                <% const routes = ["projects", "stacks", "images", "languages", "certificates", "testimonials"]; %>
+                <% const routes = ["projects", "stacks", "languages", "certificates", "testimonials", "images"]; %>
                 <% routes.forEach((route, i) => { %>
                     <% if (route === "images") { %>
                         <h6><%= i + 1 %>. Images</h6>
@@ -40,6 +40,7 @@
                         <h6><%= i + 1 %>. <%= route %></h6>
                         <p>API endpoint for <%= route %> CRUD operations.</p>
                         <pre><code>GET https://devalentineapi.onrender.app/api/<%= route %>/list</code></pre>
+                        <h6>Sample Result for <%= route %></h6>
                         <pre><code id="<%= route %>-data"></code></pre>
                         <pre><code>POST https://devalentineapi.onrender.app/api/<%= route %>/add</code></pre>
                         <pre><code>PUT https://devalentineapi.onrender.app/api/<%= route %>/update/{<%= route.substring(0, route.length - 1) %>Id}</code></pre>
