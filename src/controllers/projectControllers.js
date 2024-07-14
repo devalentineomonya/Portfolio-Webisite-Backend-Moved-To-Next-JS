@@ -40,7 +40,7 @@ const addProject = async (req, res) => {
     } catch (error) {
         if (error.isJoi) {
             unlink(image);
-            return res.status(400).json({ success: false, message: error.details[0].message });
+            return res.status(422).json({ success: false, message: error.details[0].message });
         }
         unlink(image);
         res.status(500).json({ success: false, message: "An error occurred while saving project",error: error.message });

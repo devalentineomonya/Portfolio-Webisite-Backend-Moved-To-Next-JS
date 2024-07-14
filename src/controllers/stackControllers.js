@@ -16,7 +16,7 @@ const addStack = async (req, res) => {
         await newStack.save();
         res.status(201).json({ success: true, message: "Stack added successfully" });
     } catch (error) {
-        if (error.isJoi) return res.status(400).json({ success: false, message: error.details[0].message });
+        if (error.isJoi) return res.status(422).json({ success: false, message: error.details[0].message });
         res.status(500).json({ success: false, message: "An error occurred while adding stack: ", error:error.message });
     }
 };

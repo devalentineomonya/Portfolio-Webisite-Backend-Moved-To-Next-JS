@@ -21,7 +21,7 @@ const addCertificate = async (req, res) => {
     } catch (error) {
         if (Joi.isError(error)) {
             unlink(image);
-            return res.status(400).json({ success: false, message: error.details[0].message });
+            return res.status(422).json({ success: false, message: error.details[0].message });
         }
         
         unlink(image);

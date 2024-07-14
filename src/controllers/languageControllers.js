@@ -13,7 +13,7 @@ const addLanguage = async (req, res) => {
         res.status(201).json({ success: true, message: "Language added successfully", data: language });
     } catch (error) {
         if (Joi.isError(error)) {
-            return res.status(400).json({ success: false, message: error.details[0].message });
+            return res.status(422).json({ success: false, message: error.details[0].message });
         }
         res.status(500).json({ success: false, message: "An error occurred while adding language" });
     }

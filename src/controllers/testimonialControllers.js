@@ -13,7 +13,7 @@ const addTestimonial = async (req, res) => {
         res.status(201).json({ success: true, message: 'Testimonial added successfully', data: newTestimonial });
     } catch (error) {
         if (error.isJoi) {
-            return res.status(400).json({ success: false, message: error.details[0].message });
+            return res.status(422).json({ success: false, message: error.details[0].message });
         }
         res.status(500).json({ success: false, message: 'Failed to add testimonial', error: error.message });
     }
