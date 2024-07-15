@@ -8,7 +8,7 @@ const addUser = async (req, res) => {
     const image = req.file ? req.file.filename : null;
 
     try {
-        await userSchema.validateAsync({ firstName, lastName, email, password });
+        await userSchema.validateAsync({ firstName, lastName, email, password, image });
 
         const hashedPassword = await bcrypt.hash(password, 15);
         const checkUser = await userModels.findOne({ email });
@@ -103,7 +103,7 @@ const getUser = async (req, res) => {
 
 const listUsers = async (req, res) => {
     try {
-        const users = await userModels.find();
+        const users = await userModels.find().select('-password');
         res.status(200).json({ success: true, count: users.length, data: users });
     } catch (error) {
         res.status(500).json({ success: false, message: "An error occurred while fetching users: ", error: error.message });

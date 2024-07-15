@@ -6,6 +6,7 @@ const userSchema = Joi.object({
     lastName: Joi.string().required().min(3),
     email: Joi.string().email().required(),
     password: Joi.string().min(6).required(),
+    image:Joi.string().required()
 });
 
 // Project Schema
