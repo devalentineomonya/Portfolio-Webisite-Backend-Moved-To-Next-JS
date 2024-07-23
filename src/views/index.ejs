@@ -40,18 +40,17 @@
                         <h6><%= i + 1 %>. <%= route %></h6>
                         <p>API endpoint for <%= route %> CRUD operations.</p>
                         <pre><code>GET https://devalentineapi.onrender.app/api/<%= route %>/list</code></pre>
-                        <h6>Sample Result for <%= route %></h6>
+                        <h6>Sample Result for <%= route %> Limit` set to 3</h6>
                         <pre><code id="<%= route %>-data"></code></pre>
                         <pre><code>POST https://devalentineapi.onrender.app/api/<%= route %>/add</code></pre>
                         <pre><code>PUT https://devalentineapi.onrender.app/api/<%= route %>/update/{<%= route.substring(0, route.length - 1) %>Id}</code></pre>
                         <pre><code>DELETE https://devalentineapi.onrender.app/api/<%= route %>/delete/{<%= route.substring(0, route.length - 1) %>Id}</code></pre>
                         <script>
                             (async () => {
-                                const response = await fetch("/api/<%= route %>/list", { method: "GET" });
+                                const response = await fetch("/api/<%= route %>/list?limit=3", { method: "GET" });
                                 const data = await response.json();
-                                console.log(data.data);
-                                const firstThree = data.data.slice(0, 3);
-                                document.getElementById("<%= route %>-data").textContent = JSON.stringify(firstThree, null, 2);
+                         
+                                document.getElementById("<%= route %>-data").textContent = JSON.stringify(data, null, 2);
                             })();
                         </script>
                     <% } %>
