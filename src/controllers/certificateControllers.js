@@ -1,6 +1,6 @@
 const { unlink } = require("../middlewares/uploadMiddleware");
 const certificatesModel = require("../models/certificateModels");
-const {certificateSchema} = require("../validation/JoiSchemas")
+const { certificateSchema } = require("../validation/JoiSchemas")
 
 const addCertificate = async (req, res) => {
     const { name } = req.body;
@@ -23,19 +23,28 @@ const addCertificate = async (req, res) => {
             unlink(image);
             return res.status(422).json({ success: false, message: error.details[0].message });
         }
-        
+
         unlink(image);
-        res.status(500).json({ success: false, message: "An error occurred while saving certificate: ", error:error.message });
+        res.status(500).json({ success: false, message: "An error occurred while saving certificate: ", error: error.message });
     }
 }
 
 
 const getCertificates = async (req, res) => {
+    const { limit } = req?.query
+
     try {
-        const certificates = await certificatesModel.find();
+
+        const intLimit = parseInt(limit)
+        let certificates;
+        if (!isNaN(intLimit)) {
+            certificates = await certificatesModel.find().limit(intLimit)
+        } else {
+            certificates = await certificatesModel.find()
+        }
         res.status(200).json({ success: true, count: certificates.length, data: certificates });
     } catch (error) {
-        res.status(500).json({ success: false, message: "An error occurred while fetching certificates: " , error:error.message });
+        res.status(500).json({ success: false, message: "An error occurred while fetching certificates: ", error: error.message });
     }
 };
 
@@ -75,7 +84,7 @@ const deleteCertificate = async (req, res) => {
         unlink(certificate.image);
         res.status(200).json({ success: true, message: "Certificate has been deleted successfully" });
     } catch (error) {
-        res.status(500).json({ success: false, message: "An error occurred while deleting certificate: " , error:error.message });
+        res.status(500).json({ success: false, message: "An error occurred while deleting certificate: ", error: error.message });
     }
 };
 
