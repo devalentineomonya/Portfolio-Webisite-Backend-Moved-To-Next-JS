@@ -1,7 +1,6 @@
 const testimonialModel = require('../models/testimonialsModels');
 const { testimonialSchema } = require('../validation/JoiSchemas');
 
-// Create a new testimonial
 const addTestimonial = async (req, res) => {
     const { name, occupation, message } = req.body;
 
@@ -18,15 +17,25 @@ const addTestimonial = async (req, res) => {
         res.status(500).json({ success: false, message: 'Failed to add testimonial', error: error.message });
     }
 }
-// Get all testimonials
+
 const listTestimonials = async (req, res) => {
+    const { limit } = req?.query
     try {
-        const testimonials = await testimonialModel.find();
+        const intLimit = parseInt(limit)
+        let testimonials;
+        if (!isNaN(intLimit)) {
+            testimonials = await testimonialModel.find().limit(intLimit);
+        } else {
+
+            testimonials = await testimonialModel.find();
+        }
+       
         res.status(200).json({ success: true, count: testimonials.length, data: testimonials });
     } catch (error) {
         res.status(500).json({ success: false, message: 'Failed to fetch testimonials', error: error.message });
     }
 };
+
 
 const getTestimonial = async (req, res) => {
     try {
@@ -41,7 +50,7 @@ const getTestimonial = async (req, res) => {
     }
 }
 
-// Update a testimonial
+
 const updateTestimonial = async (req, res) => {
     const { id } = req.params;
     const { name, occupation, message } = req.body;
@@ -57,7 +66,7 @@ const updateTestimonial = async (req, res) => {
     }
 };
 
-// Delete a testimonial
+
 const deleteTestimonial = async (req, res) => {
     const { id } = req.params;
 
