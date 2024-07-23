@@ -29,7 +29,7 @@ const addCollaborator = async (req, res) => {
             // Joi validation error
             return res.status(422).json({ success: false, message: error.details[0].message });
         }
-        res.status(500).json({ success: false, message: "An error occurred while adding collaborator: " , error:error.message });
+        res.status(500).json({ success: false, message: "An error occurred while adding collaborator: ", error: error.message });
     }
 };
 
@@ -47,7 +47,7 @@ const deleteCollaborator = async (req, res) => {
 
 
     } catch (error) {
-        res.status(500).json({ success: false, message: "An error occurred while deleting collaborator: " , error:error.message });
+        res.status(500).json({ success: false, message: "An error occurred while deleting collaborator: ", error: error.message });
     }
 };
 
@@ -83,11 +83,20 @@ const updateCollaborator = async (req, res) => {
 
 
 const listCollaborators = async (req, res) => {
+    const { limit } = req?.query
+
     try {
-        const collaborators = await collaboratorModels.find();
+        const intLimit = parseInt(limit)
+        let collaborators;
+        if (!isNaN(intLimit)) {
+            collaborators = await collaboratorModels.find().limit(intLimit);
+        } else {
+            collaborators = await collaboratorModels.find();
+        }
+
         res.status(200).json({ success: true, count: collaborators.length, data: collaborators });
     } catch (error) {
-        res.status(500).json({ success: false, message: "An error occurred while fetching collaborators: " ,error: error.message });
+        res.status(500).json({ success: false, message: "An error occurred while fetching collaborators: ", error: error.message });
     }
 };
 
