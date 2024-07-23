@@ -43,13 +43,21 @@ const addProject = async (req, res) => {
             return res.status(422).json({ success: false, message: error.details[0].message });
         }
         unlink(image);
-        res.status(500).json({ success: false, message: "An error occurred while saving project",error: error.message });
+        res.status(500).json({ success: false, message: "An error occurred while saving project", error: error.message });
     }
 };
 
 const listProjects = async (req, res) => {
+    const { limit } = req?.query
     try {
-        const projects = await projectModel.find();
+        const intLimit = parseInt(limit)
+        let projects;
+        if (!isNaN(intLimit)) {
+            projects = await projectModel.find().limit(intLimit);
+        } else {
+
+            projects = await projectModel.find();
+        }
         res.status(200).json({ success: true, count: projects.length, data: projects });
     } catch (error) {
         res.status(500).json({ success: false, message: "An error occurred while listing projects", error: error.message });
