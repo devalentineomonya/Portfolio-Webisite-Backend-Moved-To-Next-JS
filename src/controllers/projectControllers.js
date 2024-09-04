@@ -48,7 +48,7 @@ const addProject = async (req, res) => {
 };
 
 const listProjects = async (req, res) => {
-    const { limit } = req?.query
+    const { limit } = req.query
     try {
         const intLimit = parseInt(limit)
         let projects;

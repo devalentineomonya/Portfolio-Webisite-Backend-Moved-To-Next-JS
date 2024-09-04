@@ -31,7 +31,7 @@ const addCertificate = async (req, res) => {
 
 
 const getCertificates = async (req, res) => {
-    const { limit } = req?.query
+    const { limit } = req.query
 
     try {
 

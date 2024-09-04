@@ -59,7 +59,7 @@ const deleteLanguage = async (req, res) => {
 };
 
 const getLanguages = async (req, res) => {
-    const { limit } = req?.query
+    const { limit } = req.query
     try {
         const intLimit = parseInt(limit)
         let languages;

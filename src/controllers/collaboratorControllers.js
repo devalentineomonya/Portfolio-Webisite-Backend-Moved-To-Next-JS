@@ -83,7 +83,7 @@ const updateCollaborator = async (req, res) => {
 
 
 const listCollaborators = async (req, res) => {
-    const { limit } = req?.query
+    const { limit } = req.query
 
     try {
         const intLimit = parseInt(limit)

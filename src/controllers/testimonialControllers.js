@@ -19,7 +19,7 @@ const addTestimonial = async (req, res) => {
 }
 
 const listTestimonials = async (req, res) => {
-    const { limit } = req?.query
+    const { limit } = req.query
     try {
         const intLimit = parseInt(limit)
         let testimonials;
